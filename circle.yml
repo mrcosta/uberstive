@@ -1,0 +1,15 @@
+machine:
+  python:
+    version: 3.5.1
+
+test:
+  override:
+    - py.test appfolder
+
+deployment:
+  staging:
+    branch: master
+    heroku:
+      appname: herokuappsname
+
+

@@ -1,0 +1,2 @@
+# specify python version to run on dynos heroku
+python-3.5.1
