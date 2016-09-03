@@ -1,0 +1,29 @@
+what others provides:
+
+https://uber.totals.io/
+    - total rides
+    - total distance
+    - total riding time
+    - total riding time average
+    - total wait time
+    - total rides by category
+
+https://ubeen.io/results#_
+    - first ever ride
+    - total time in uber
+    - total distance
+    - average ride distance
+    - rides by time
+    - rides by day
+    - rides by month
+    - rides by type
+    - longest ride
+    - am/pm averages
+    - top cities with rides
+    - days since last ride
+
+
+what we will provide:
+most places that you went with uber (get locations and turn into places)
+average time to go to a place (em media quanto tempo você leva até esse outro lugar de uber)
+media de distancia para ir para esse lugar (para saber se esta sendo passado para atras ou não)

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from quantotempotemos.mod_info.views import calculate_time
+from uberstive.mod_info.views import calculate_time
 from datetime import date, datetime
 
 #def test_calculate_time_with_today():

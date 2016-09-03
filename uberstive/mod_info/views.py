@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import render_template
-from quantotempotemos import app
+from uberstive import app
 from datetime import date, datetime
 from dateutil import relativedelta as rdelta
 from collections import namedtuple
