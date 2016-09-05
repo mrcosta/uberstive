@@ -8,5 +8,5 @@ app.config.from_object('config')
 def not_found(error):
     return render_template('404.html'), 404
 
-from uberstive.mod_info import views
+from uberstive.mod_data_retrieving import uber_data
 
