@@ -14,8 +14,8 @@ def history():
 
 def user_history():
     # https://api.uber.com/v1.2/history
-    # parameters = {'apikey': PUBLIC_KEY, 'ts': timestamp, 'hash': hash_, 'limit': 100, 'offset': n}
-    # history = requests.get('http://gateway.marvel.com/v1/public/characters', params=parametros)  # requisica
+    # parameters = {}
+    # history = requests.get(UBER_API_URL + 'history', params=parameters)
     return "ana delicia"
 
 
@@ -40,10 +40,10 @@ def login():
     return redirect(login_url)
 
 
-@app.route('/oauth/token')
+@app.route('/oauth/cb')
 def get_access_token():
     parameters = {
-        'redirect_uri': 'http://localhost:5000/oauth/token',
+        'redirect_uri': 'http://localhost:5000/oauth/cb',
         'code': request.args.get('code'),
         'grant_type': 'authorization_code',
     }
