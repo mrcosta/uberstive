@@ -11,66 +11,66 @@ UBER_API_URL = 'https://sandbox-api.uber.com/v1/'
 def history():
     return render_template("home.html", history=user_history())
 
+
 def user_history():
     # https://api.uber.com/v1.2/history
     # parameters = {'apikey': PUBLIC_KEY, 'ts': timestamp, 'hash': hash_, 'limit': 100, 'offset': n}
     # history = requests.get('http://gateway.marvel.com/v1/public/characters', params=parametros)  # requisica
     return "ana delicia"
 
+
 @app.route('/oauth/login')
 def login():
+    uber_api = OAuth2Service(
+        client_id=os.environ['CLIENT_ID'],
+        client_secret=os.environ['CLIENT_SECRET'],
+        name='stive',
+        authorize_url='https://login.uber.com/oauth/authorize',
+        access_token_url='https://login.uber.com/oauth/token',
+        base_url=UBER_API_URL,
+    )
 
-  uber_api = OAuth2Service(
-    client_id=os.environ['CLIENT_ID'],
-    client_secret=os.environ['CLIENT_SECRET'],
-    name='stive',
-    authorize_url='https://login.uber.com/oauth/authorize',
-    access_token_url='https://login.uber.com/oauth/token',
-    base_url=UBER_API_URL,
-  )
+    parameters = {
+        'response_type': 'code',
+        'redirect_uri': 'http://localhost:5000/oauth/cb',
+        'scope': 'profile',
+    }
 
-  parameters = {
-    'response_type': 'code',
-    'redirect_uri': 'http://localhost:5000/oauth/cb',
-    'scope': 'profile',
-  }
-
-  login_url = uber_api.get_authorize_url(**parameters)
-  return redirect(login_url)
+    login_url = uber_api.get_authorize_url(**parameters)
+    return redirect(login_url)
 
 
-@app.route('/oauth/cb')
-def test():
+@app.route('/oauth/token')
+def get_access_token():
+    parameters = {
+        'redirect_uri': 'http://localhost:5000/oauth/token',
+        'code': request.args.get('code'),
+        'grant_type': 'authorization_code',
+    }
 
-  parameters = {
-    'redirect_uri': 'http://localhost:5000/oauth/cb',
-    'code': request.args.get('code'),
-    'grant_type': 'authorization_code',
-  }
+    response = requests.post(
+        'https://login.uber.com/oauth/token',
+        auth=(
+            os.environ['CLIENT_ID'],
+            os.environ['CLIENT_SECRET'],
+        ),
+        data=parameters,
+    )
 
-  response = requests.post(
-    'https://login.uber.com/oauth/token',
-    auth=(
-      os.environ['CLIENT_ID'],
-      os.environ['CLIENT_SECRET'],
-    ),
-    data=parameters,
-  )
+    access_token = response.json().get('access_token')
+    return access_token
 
-  access_token = response.json().get('access_token')
-  return access_token
 
 @app.route('/profile')
 def profile():
-  access_token = request.args.get('access_token')
+    access_token = request.args.get('access_token')
 
-  response = requests.get(
-    UBER_API_URL + 'me',
-    headers={
-        'Authorization': 'Bearer %s' % access_token
-    }
-  )
+    response = requests.get(
+        UBER_API_URL + 'me',
+        headers={
+            'Authorization': 'Bearer %s' % access_token
+        }
+    )
 
-  data = response.text
-  return data
-
+    data = response.text
+    return data
