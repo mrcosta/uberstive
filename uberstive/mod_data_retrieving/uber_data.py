@@ -4,20 +4,12 @@ from rauth import OAuth2Service
 import requests
 import os
 
-UBER_API_URL = 'https://sandbox-api.uber.com/v1/'
+UBER_API_URL = 'https://sandbox-api.uber.com/v1.2/'
 
 
 @app.route('/', methods=['GET'])
 def history():
     return render_template("home.html", history=user_history())
-
-
-def user_history():
-    # https://api.uber.com/v1.2/history
-    # parameters = {}
-    # history = requests.get(UBER_API_URL + 'history', params=parameters)
-    return "ana delicia"
-
 
 @app.route('/oauth/login')
 def login():
@@ -32,18 +24,18 @@ def login():
 
     parameters = {
         'response_type': 'code',
-        'redirect_uri': 'http://localhost:5000/oauth/cb',
-        'scope': 'profile',
+        'redirect_uri': 'http://localhost:5000/oauth/token',
+        'scope': 'history',
     }
 
     login_url = uber_api.get_authorize_url(**parameters)
     return redirect(login_url)
 
 
-@app.route('/oauth/cb')
+@app.route('/oauth/token')
 def get_access_token():
     parameters = {
-        'redirect_uri': 'http://localhost:5000/oauth/cb',
+        'redirect_uri': 'http://localhost:5000/oauth/token',
         'code': request.args.get('code'),
         'grant_type': 'authorization_code',
     }
@@ -58,7 +50,7 @@ def get_access_token():
     )
 
     access_token = response.json().get('access_token')
-    return access_token
+    return redirect('profile?access_token=' + access_token)
 
 
 @app.route('/profile')
@@ -66,10 +58,11 @@ def profile():
     access_token = request.args.get('access_token')
 
     response = requests.get(
-        UBER_API_URL + 'me',
+        UBER_API_URL + 'history',
         headers={
-            'Authorization': 'Bearer %s' % access_token
-        }
+            'Authorization': 'Bearer %s' % access_token,
+        },
+        params={'limit': '50'} #TODO: improve this logic here to get all the history
     )
 
     data = response.text
