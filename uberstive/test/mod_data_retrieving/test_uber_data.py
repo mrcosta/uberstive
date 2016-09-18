@@ -12,5 +12,7 @@ my_vcr = vcr.VCR(cassette_library_dir=config.TEST_DIR + '/mod_data_retrieving/fi
 @my_vcr.use_cassette()
 def test_retrieve_history():
     access_token = 'n0I2cIXihQstBCDVO8h5Z8zl3FvfpA'
-    assert history(access_token) == ''
+    request_id_history = history(access_token)
 
+    assert len(request_id_history) == 50
+    assert '941b93ea-05df-4d7d-90e0-a0f0044f5f01' and '291cd6a4-e723-4cc6-a179-cf307ecfb6b3' in request_id_history

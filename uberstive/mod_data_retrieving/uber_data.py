@@ -24,7 +24,6 @@ def login():
 
 
 def access_token(code):
-    print('Code: ' + code)
     parameters = {
         'redirect_uri': 'http://localhost:5000/oauth/token',
         'code': code,
@@ -43,7 +42,6 @@ def access_token(code):
 
 
 def history(access_token):
-    print('Token: ' + access_token);
     response = requests.get(
         UBER_API_URL + 'history',
         headers={
@@ -51,6 +49,10 @@ def history(access_token):
         },
         params={'limit': '50'}  # TODO: improve this logic here to get all the history
     )
-    return response.text
+    history = response.json()
+    requests_id_history = [ride['request_id'] for ride in history['history'] if ride['status'] == 'completed']
+
+    return requests_id_history
+
 
 
