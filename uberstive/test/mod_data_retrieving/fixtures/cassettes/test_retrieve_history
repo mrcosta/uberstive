@@ -1,0 +1,85 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.11.1]
+    method: GET
+    uri: https://sandbox-api.uber.com/v1.2/history?limit=50
+  response:
+    body:
+      string: !!binary |
+        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
+    headers:
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Language: [en]
+      Content-Type: [application/json]
+      Date: ['Sun, 18 Sep 2016 00:41:54 GMT']
+      Server: [nginx]
+      Strict-Transport-Security: [max-age=0]
+      X-Content-Type-Options: [nosniff]
+      X-Rate-Limit-Limit: ['2000']
+      X-Rate-Limit-Remaining: ['1989']
+      X-Rate-Limit-Reset: ['1474160400']
+      X-Uber-App: [uberex-sandbox, migrator-uberex-sandbox-optimus]
+      X-XSS-Protection: [1; mode=block]
+    status: {code: 200, message: OK}
+version: 1
